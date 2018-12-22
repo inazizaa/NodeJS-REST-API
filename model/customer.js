@@ -1,28 +1,35 @@
-'use strict';
-
-exports.ok = function(values, res) {
-    var data = {
-        'status': 0,
-        'values': values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.err = function(values, res) {
-    var data = {
-        'status': 99,
-        'values': values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.datanotfound = function(values, res) {
-    var data = {
-        'status': 14,
-        'values': (values ? values : 'data not found')
-    };
-    res.json(data);
-    res.end();
-};
+module.exports = (sequelize, type) => {
+    return sequelize.define('customer', {
+        customerNumber: {
+            field:'customerNumber',
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        firstName: {
+            field:'firstName',
+            type: type.STRING
+        },
+        lastName: {
+            field:'lastName',
+            type: type.STRING
+        },
+        birthDate: {
+            field:'birthDate',
+            type: type.DATE
+        },
+        username: type.STRING,
+        password: type.STRING,
+        phoneNumber: {
+            field:'phoneNumber',
+            type: type.STRING
+        },
+        phoneType: {
+            field:'phoneType',
+            type: type.STRING
+        }
+    }, {
+        tableName: 'customer',
+        timestamps: false
+    })
+}
