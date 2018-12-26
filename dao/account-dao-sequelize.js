@@ -1,21 +1,23 @@
-const { Customer } = require('../db/sequelize');
+const { Account, Customer } = require('../db/sequelize');
 var logger = require('../util/logging/winston-logger');
 
 exports.getById = function getById(id, callback) {
-    Customer.findById(id)
-    .then((customer) => {
-        return callback(null, customer);
+    Account.findById(id)
+    .then((account) => {
+        return callback(null, account);
     })
     .catch((error) => {
         logger.error(error);
         return callback(error);
     })
 };
-                                                           
+
 exports.getAll = function getAll(callback) {
-    Customer.findAll()
-    .then((customers) => {
-        return callback(null, customers);
+    Account.findAll({
+        include:[Customer]
+    })
+    .then((accounts) => {
+        return callback(null, accounts);
     })
     .catch((error) => {
         logger.error(error);
@@ -24,9 +26,18 @@ exports.getAll = function getAll(callback) {
 };
 
 exports.insert = function insert(data, callback) {
-    Customer.create(data)
-    .then(customer => {
-        return callback(null, customer);
+    // account = data;
+    // if(account.customer==null && account.customerId==null){
+    //     res.json('customer kosong');
+    // }else{
+    //     if(account.customerId==null){
+    //         account.customerId = account.customer.customerNumber;
+    //     }
+    // }
+
+    Account.create(data)
+    .then(account => {
+        return callback(null, account);
     })
     .catch((error) => {
         logger.error(error);
@@ -35,8 +46,17 @@ exports.insert = function insert(data, callback) {
 };
 
 exports.update = function update(id, data, callback) {
-    Customer.update(data, {
-        where: { customerNumber: data.customerNumber },
+    // account = data;
+    // if(account.customer==null && account.customer_number==null){
+    //     res.json('customer kosong');
+    // }else{
+    //     if(account.customerId==null){
+    //         account.customerId = account.customer.customerNumber;
+    //     }
+    // }
+    
+    Account.update(data, {
+        where: { accountNumber: data.accountNumber },
         returning: true,
         plain: true
       })
@@ -52,8 +72,8 @@ exports.update = function update(id, data, callback) {
 };
 
 exports.del = function del(id, callback) {
-    Customer.destroy({
-        where: { customerNumber: id }
+    Account.destroy({
+        where: { accountNumber: id }
       })
     .then(result => {
         logger.info('result  update:');

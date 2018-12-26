@@ -1,28 +1,25 @@
-'use strict';
-
-exports.ok = function(values, res){
-    var data={
-        'status' : 77,
-        'values' : values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.error = function(values, res){
-    var data ={
-        'status': 1212,
-        'values' : values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.datanotfound = function(values,res){
-    var data ={
-        'status' : 0,
-        'values' : (values ? values : 'data not found')
-    };
-    res.json(data);
-    res.end();
-};
+module.exports = (sequelize, type) => {
+    return sequelize.define('account', {
+        accountNumber: {
+            field:'accountNumber',
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        openDate: {
+            field:'openDate',
+            type: type.DATE
+        },
+        balance: {
+            field:'balance',
+            type: type.STRING
+        },
+        customerId: {
+            field:'customerId',
+            type: type.INTEGER
+        }
+    }, {
+        tableName: 'account',
+        timestamps: false
+    })
+}

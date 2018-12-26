@@ -1,28 +1,29 @@
-'use strict';
-
-exports.ok = function(values, res){
-    var data={
-        'status' : 77,
-        'values' : values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.error = function(values, res){
-    var data ={
-        'status': 1212,
-        'values' : values
-    };
-    res.json(data);
-    res.end();
-};
-
-exports.datanotfound = function(values,res){
-    var data ={
-        'status' : 0,
-        'values' : (values ? values : 'data not found')
-    };
-    res.json(data);
-    res.end();
-};
+module.exports = (sequelize,type) => {
+    return sequelize.define('transaction', {
+        idtrans: {
+            field: 'idtrans',
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIntcrement: true
+        },
+        amountSign: {
+            field: 'amountSign',
+            type: type.STRING
+        },
+        amount: {
+            field: 'amount',
+            type: type.STRING
+        },
+        type: {
+            field: 'type',
+            type: type.STRING
+        },
+        accountId: {
+            field: 'accountId',
+            type: type.INTEGER
+        }
+    },{
+       tableName: 'transaction',
+       timestamps: false 
+    })
+}
