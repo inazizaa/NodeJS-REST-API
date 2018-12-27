@@ -26,16 +26,16 @@ exports.getAll = function getAll(callback) {
 };
 
 exports.insert = function insert(data, callback) {
-    // account = data;
-    // if(account.customer==null && account.customerId==null){
-    //     res.json('customer kosong');
-    // }else{
-    //     if(account.customerId==null){
-    //         account.customerId = account.customer.customerNumber;
-    //     }
-    // }
+    account = data;
+    if(account.customer==null && account.customer_id==null){
+        res.json('customer kosong');
+    }else{
+        if(account.customer_id==null){
+            account.customer_id = account.customer.customernumber;
+        }
+    }
 
-    Account.create(data)
+    Account.create(account)
     .then(account => {
         return callback(null, account);
     })
@@ -46,14 +46,14 @@ exports.insert = function insert(data, callback) {
 };
 
 exports.update = function update(id, data, callback) {
-    // account = data;
-    // if(account.customer==null && account.customer_number==null){
-    //     res.json('customer kosong');
-    // }else{
-    //     if(account.customerId==null){
-    //         account.customerId = account.customer.customerNumber;
-    //     }
-    // }
+    account = data;
+    if(account.customer==null && account.customer_id==null){
+        res.json('customer kosong');
+    }else{
+        if(account.customer_id==null){
+            account.customer_id = account.customer.customernumber;
+        }
+    }
     
     Account.update(data, {
         where: { accountNumber: data.accountNumber },

@@ -1,10 +1,12 @@
+const uuid = require('uuid/v4');
+
 module.exports = (sequelize, type) => {
     return sequelize.define('account', {
         accountNumber: {
             field:'accountNumber',
-            type: type.INTEGER,
+            type: type.UUID,
             primaryKey: true,
-            autoIncrement: true
+            defaultValue: uuid()
         },
         openDate: {
             field:'openDate',
@@ -14,10 +16,15 @@ module.exports = (sequelize, type) => {
             field:'balance',
             type: type.STRING
         },
-        customerId: {
-            field:'customerId',
-            type: type.INTEGER
-        }
+        customer_id: {
+            field:'customer_id',
+            type: type.INTEGER,
+            onDelete: 'CASCADE',
+            references:{
+                model:'customer',
+                key: 'customer_id'
+              }
+            }
     }, {
         tableName: 'account',
         timestamps: false

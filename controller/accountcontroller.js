@@ -1,4 +1,4 @@
-var response = require('../model/account');
+var response = require('../model/res');
 var accountDao = require('../dao/account-dao-sequelize');
 var logger = require('../util/logging/winston-logger');
 var util = require('util');
@@ -8,7 +8,7 @@ exports.accounts = function(req, res) {
     accountDao.getAll(function (error, rows){
         if(error){
             logger.error('error while select: '+error);
-            response.error(error, res);
+            response.err(error, res);
         } else{
             response.ok(rows, res)
         }
@@ -16,10 +16,10 @@ exports.accounts = function(req, res) {
 };
 
 exports.getById = function(req, res) {
-    accountDao.getById(req.params['id'], function(error, data){
-        if(error){
+    accountDao.getById(req.params['id'], function(err, data){
+        if(err){
             logger.error('error call getById : '+err);
-            response.err(error, res);
+            response.err(err, res);
         } 
         response.ok(data, res);
     });
@@ -29,10 +29,10 @@ exports.getById = function(req, res) {
 exports.update = function(req, res) {
     logger.info('request for update :');
     logger.debug(req.body);
-    accountDao.getById(req.body.accountNumber, function(error, data){
-        if(error){
+    accountDao.getById(req.body.accountNumber, function(err, data){//check account exists
+        if(err){
             logger.error('error call getById : '+err);
-            response.err(error, res);
+            response.err(err, res);
         } else if(data==null){
             response.datanotfound('account not found', res);
         }else{
@@ -48,25 +48,24 @@ exports.update = function(req, res) {
     });
 };
 
-
-exports.insert=function(req, res){
+exports.insert= function(req, res) {
     logger.info('request for insert :');
     logger.debug(req.body);
     accountDao.insert(req.body, function(err, data){
         if(err){
             logger.error('error call insert : '+err);
             response.err(err, res);
-        }
+        } 
         response.ok('data inserted with id '+data.accountNumber, res);
     });
 };
 
 exports.del = function(req, res) {
-    logger.info(util.format('deleting customer id %s', req.params['id']));
-    accountDao.getById(req.params['id'], function(error, data){
-        if(error){
+    logger.info(util.format('deleting account id %s', req.params['id']));
+    accountDao.getById(req.params['id'], function(err, data){//check account exists
+        if(err){
             logger.error('error call getById : '+err);
-            response.error(error, res);
+            response.err(err, res);
         }  else if(data==null){
             response.datanotfound('account not found', res);
         }else{
@@ -74,9 +73,9 @@ exports.del = function(req, res) {
             accountDao.del(req.params['id'], function(err, data){
                 if(err){
                     logger.error('error call delete : '+err);
-                    response.error(error, res);
+                    response.err(error, res);
                 } 
-                response.ok('account deleted with id : '+data, res);
+                response.ok('customer deleted with id : '+data, res);
             });
         }
     });

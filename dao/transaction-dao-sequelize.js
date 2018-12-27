@@ -1,9 +1,9 @@
-const { Transaction, Account } = require('../db/sequelize');
+const {Transaction, Account } = require('../db/sequelize');
 var logger = require('../util/logging/winston-logger');
 
 exports.getById = function getById(id, callback){
     Transaction.findById(id)
-    .then((transaction) =>{
+    .then((transaction) => {
         return callback(null, transaction);
     })
     .catch((error) => {
@@ -12,30 +12,31 @@ exports.getById = function getById(id, callback){
     })
 };
 
-exports.getAll = function getAll(callback){
+exports.getAll = function getAll(callback) {
     Transaction.findAll({
         include:[Account]
     })
-    .then((transactions) =>{
+    .then((transactions) => {
         return callback(null, transactions);
     })
-    .catch((error) =>{
+    .catch((error) => {
         logger.error(error);
         return callback(error);
     })
 };
 
-exports.insert = function insert(data, callback){
+exports.insert = function insert(data, callback) {
     transaction = data;
-    if(transaction.account==null && transaction.accountId==null){
+    if(transaction.account == null && transaction.account_id==null){
         res.json('account kosong');
     }else{
-        if(transaction.accountId==null){
-            transaction.accountId = transaction.account.accountNumber;
-            }
+        if(transaction.account_id == null){
+            transaction.account_id = transaction.account.accountNumber;
         }
+    }
+
     Transaction.create(transaction)
-    .then(transaction=> {
+    .then(transaction => {
         return callback(null, transaction);
     })
     .catch((error) => {
@@ -44,24 +45,23 @@ exports.insert = function insert(data, callback){
     })
 };
 
-exports.update = function update(id, data, callback) {
-    account = data;
-    if(transaction.account==null && transaction.accountNumber==null){
-        res.json('transaction empty');
+exports.update = function update(id, data, callback){
+    transaction = data;
+    if(transaction.account==null && transaction.account_id==null){
+        res.json('account kosong');
     }else{
-        if(transaction.account==null){
-            transaction.accountId = transaction.account.accountNumber;
+        if(transaction.account_id==null){
+            transaction.account_id = transaction.account.accountNumber;
         }
     }
-    
+
     Transaction.update(data, {
-        where: { idtrans: data.idtrans },
+        where: {id: data.id },
         returning: true,
         plain: true
-        
-      })
+    })
     .then(result => {
-        logger.info('result  update:');
+        logger.info('result update:');
         logger.info(result);
         return callback(null, data);
     })
@@ -71,12 +71,12 @@ exports.update = function update(id, data, callback) {
     })
 };
 
-exports.del = function del(id, callback) {
+exports.delTransaction = function delTransaction(id, callback) {
     Transaction.destroy({
-        where: { idtrans: id }
-      })
+        where: { id: id}
+    })
     .then(result => {
-        logger.info('result  update:');
+        logger.info('result update:');
         logger.info(result);
         return callback(null, id);
     })

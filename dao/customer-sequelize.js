@@ -11,7 +11,7 @@ exports.getById = function getById(id, callback) {
         return callback(error);
     })
 };
-                                                           
+
 exports.getAll = function getAll(callback) {
     Customer.findAll()
     .then((customers) => {
