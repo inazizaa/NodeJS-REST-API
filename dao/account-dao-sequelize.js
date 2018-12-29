@@ -12,8 +12,9 @@ exports.getById = function getById(id, callback) {
     })
 };
 
-exports.getAll = function getAll(callback) {
+exports.getAll = function getAll(whereClause, callback) {
     Account.findAll({
+        where : whereClause,
         include:[Customer]
     })
     .then((accounts) => {
@@ -26,12 +27,12 @@ exports.getAll = function getAll(callback) {
 };
 
 exports.insert = function insert(data, callback) {
-    account = data;
+    let account = data;
     if(account.customer==null && account.customer_id==null){
         res.json('customer kosong');
     }else{
         if(account.customer_id==null){
-            account.customer_id = account.customer.customernumber;
+            account.customer_id = account.customerId.customerNumber;
         }
     }
 
@@ -46,12 +47,12 @@ exports.insert = function insert(data, callback) {
 };
 
 exports.update = function update(id, data, callback) {
-    account = data;
+    let account = data;
     if(account.customer==null && account.customer_id==null){
         res.json('customer kosong');
     }else{
         if(account.customer_id==null){
-            account.customer_id = account.customer.customernumber;
+            account.customer_id = account.customerId.customerNumber;
         }
     }
     

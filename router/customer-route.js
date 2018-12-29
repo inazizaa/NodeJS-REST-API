@@ -3,7 +3,7 @@
 module.exports = function(app) {
     var controller = require('../controller/customercontroller');
 
-    app.route('/customers').get(controller.customers);
+    app.route('/customer/list').get(controller.customers);
     app.route('/customer').post(controller.insertCustomer);
     app.route('/customer/:id').get(controller.getCustomerById);
     app.route('/customer').put(controller.updateCustomer);

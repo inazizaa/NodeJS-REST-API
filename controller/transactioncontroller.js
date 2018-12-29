@@ -9,8 +9,8 @@ exports.transactions = function(req, res){
             logger.error('error while select: '+error);
             response.err(ress, err);
         } else {
-         res.json(rows)
-            // response.ok(rows, res);
+        //  res.json(rows)
+            response.ok(rows, res); //ini punya node
         }
     });
 };

@@ -2,18 +2,17 @@ const uuid = require('uuid/v4');
 
 module.exports = (sequelize, type) => {
     return sequelize.define('transaction', {
-        id:{
+        idtrans:{
             field: 'idtrans',
             type: type.UUID,
             primaryKey: true,
-            autoIncrement: true,
             defaultValue: uuid()
         },
         type: {
             field: 'type',
             type: type.STRING
         },
-        amountSign: {
+        amountsign: {
             field: 'amountsign',
             type: type.STRING
         },
@@ -22,10 +21,11 @@ module.exports = (sequelize, type) => {
             type: type.STRING
         },
         account_id:{
+            field : 'account_id',
             type: type.INTEGER,
             onDelete: 'CASCADE',
             references: {
-                model: 'account',
+                model: 'accountId',
                 key: 'account_id'
             }
         }

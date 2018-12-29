@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('customer', {
+    return sequelize.define('customerId', {
         customerNumber: {
             field:'customerNumber',
             type: type.INTEGER,

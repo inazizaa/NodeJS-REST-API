@@ -9,8 +9,8 @@ exports.customers = function(req, res) {
             logger.error('error while select: '+error);
             response.err(ress, err);
         } else {
-            return res.json(rows)
-            // response.ok(rows, res)
+            // return res.json(rows)
+            response.ok(rows, res)
         }
     });
 };
