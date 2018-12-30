@@ -15,6 +15,9 @@ exports.accounts = function(req, res) {
     if(req.query.balance){
         whereClause.balance = req.query.balance;
     }
+    if(req.query.customerNumber){ //untuk memanggil forgenkey di halaman account
+        whereClause.customerNumber = req.query.customerNumber;
+    }
     
     accountDao.getAll(whereClause, function (error, rows){
         if(error){

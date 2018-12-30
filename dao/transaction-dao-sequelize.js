@@ -1,5 +1,6 @@
 const {Transaction, Account } = require('../db/sequelize');
 var logger = require('../util/logging/winston-logger');
+var res = require('../model/res')
 
 exports.getById = function getById(id, callback){
     Transaction.findById(id)
@@ -12,8 +13,9 @@ exports.getById = function getById(id, callback){
     })
 };
 
-exports.getAll = function getAll(callback) {
+exports.getAll = function getAll(whereClause, callback) {
     Transaction.findAll({
+        where: whereClause,
         include:[Account]
     })
     .then((transactions) => {
@@ -27,11 +29,11 @@ exports.getAll = function getAll(callback) {
 
 exports.insert = function insert(data, callback) {
     let transaction = data;
-    if(transaction.account == null && transaction.account_id==null){
+    if(transaction.account == null && transaction.accountId==null){
         res.json('account kosong');
     }else{
-        if(transaction.account_id == null){
-            transaction.account_id = transaction.account.accountNumber;
+        if(transaction.accountNumber == null){
+            transaction.accountNumber = transaction.accountId.accountNumber;
         }
     }
 

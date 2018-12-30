@@ -4,7 +4,22 @@ var logger = require('../util/logging/winston-logger');
 var util = require('util');
 
 exports.transactions = function(req, res){
-    transactionDao.getAll(function (error, rows){
+  //  transactionDao.getAll(function (error, rows){
+    let whereClause = {};
+    if(req.query.openDate){
+        whereClause.openDate = req.query.openDate;
+    }
+    if(req.query.idtrans){
+        whereClause.idtrans = req.query.idtrans;
+    }
+    if(req.query.balance){
+        whereClause.balance = req.query.balance;
+    }
+    if(req.query.accountNumber){ //untuk memanggil forgenkey di halaman transaction
+        whereClause.accountNumber = req.query.accountNumber;
+    }
+    
+    transactionDao.getAll(whereClause, function (error, rows){
         if(error){
             logger.error('error while select: '+error);
             response.err(ress, err);

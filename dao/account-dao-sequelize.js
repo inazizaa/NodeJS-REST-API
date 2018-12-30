@@ -28,11 +28,11 @@ exports.getAll = function getAll(whereClause, callback) {
 
 exports.insert = function insert(data, callback) {
     let account = data;
-    if(account.customer==null && account.customer_id==null){
+    if(account.customerId==null){
         res.json('customer kosong');
     }else{
-        if(account.customer_id==null){
-            account.customer_id = account.customerId.customerNumber;
+        if(account.customerNumber==null){
+            account.customerNumber = account.customerId.customerNumber;
         }
     }
 

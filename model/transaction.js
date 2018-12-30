@@ -20,13 +20,13 @@ module.exports = (sequelize, type) => {
             field: 'amount',
             type: type.STRING
         },
-        account_id:{
+        accountNumber:{ //harus sama sama di java karena bagian dari accountID
             field : 'account_id',
             type: type.INTEGER,
             onDelete: 'CASCADE',
             references: {
-                model: 'accountId',
-                key: 'account_id'
+                model: 'accountId', //harus sama kaya model java dan penamaan di nodejs
+                key: 'accountNumber' 
             }
         }
     }, {

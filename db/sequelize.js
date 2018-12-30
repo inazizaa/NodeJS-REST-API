@@ -18,8 +18,8 @@ const Customer = CustomerModel(sequelize, Sequelize)
 const Account = AccountModel(sequelize, Sequelize)
 const Transaction = TransactionModel(sequelize, Sequelize)
 
-Account.belongsTo(Customer, {foreignKey: 'customer_id', targetKey:'customerNumber'});
-Transaction.belongsTo(Account, {foreignKey: 'account_id', targetKey: 'accountNumber'});
+Account.belongsTo(Customer, {foreignKey: 'customerNumber', targetKey:'customerNumber'});
+Transaction.belongsTo(Account, {foreignKey: 'accountNumber', targetKey: 'accountNumber'}); //harus sama kaya dao
 
 
 module.exports = {
